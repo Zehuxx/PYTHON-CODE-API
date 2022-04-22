@@ -158,7 +158,7 @@ func (i *Node) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-//MarshalJSON to customize the json to save
+//MarshalJSON to customize the json to save.
 func (i *Node) MarshalJSON() ([]byte, error) {
 	type temp Node
 
