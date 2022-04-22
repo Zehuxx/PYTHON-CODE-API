@@ -2,6 +2,13 @@
 
 API to query python programs represented by nodes using [Drawflow library](https://github.com/jerosoler/Drawflow) and handled by [Dgraph](https://dgraph.io/).
 
+## Run Dgraph
+
+  docker run --rm -it -p 8000:8000 -p 8080:8080 -p 9080:9080 dgraph/standalone:v21.12.0
+  
+## Run project  
+  
+  go run main.go
 
 ## Endpoints
 
