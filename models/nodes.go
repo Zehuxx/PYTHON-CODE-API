@@ -162,11 +162,15 @@ func (i *Node) UnmarshalJSON(data []byte) error {
 func (i *Node) MarshalJSON() ([]byte, error) {
 	type temp Node
 
-	if i.Name == "root" {
+	if i.Name == "root" ||
+		i.Name == "if-body" ||
+		i.Name == "else-body" ||
+		i.Name == "for-body" {
 		connections := i.Inputs["input_1"].Connections
 		for index := range connections {
 			connections[index].Order = index + 1
 		}
 	}
+
 	return json.Marshal((*temp)(i))
 }
