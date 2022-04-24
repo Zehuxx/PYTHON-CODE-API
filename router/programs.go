@@ -9,6 +9,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	"github.com/zehuxx/python-code-api/db"
 	"github.com/zehuxx/python-code-api/routes"
 )
 
@@ -23,8 +24,12 @@ func StartServer() {
 	router.Use(middleware.Recoverer)
 	router.Use(cors.AllowAll().Handler)
 
+	//get dgraph client
+	dgraphcl, closeConnection := db.GetDgraphClient()
+	defer closeConnection()
+
 	//program routes
-	router.Mount("/api", routes.Programs())
+	router.Mount("/api", routes.Programs(dgraphcl))
 
 	port := os.Getenv("PORT")
 

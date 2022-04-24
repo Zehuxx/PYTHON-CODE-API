@@ -9,8 +9,13 @@ import (
 	"google.golang.org/grpc"
 )
 
+type DgraphInstance struct {
+	Cln  *dgo.Dgraph
+	Conn *grpc.ClientConn
+}
+
 //GetDgraphClient create client dgraph
-func GetDgraphClient() (*dgo.Dgraph, func()) {
+func GetDgraphClient() (*DgraphInstance, func()) {
 
 	DCLOUD := os.Getenv("DGRAPHCLOUD")
 	DCLOUDAPI := os.Getenv("DGRAPHCLOUDAPI")
@@ -31,9 +36,12 @@ func GetDgraphClient() (*dgo.Dgraph, func()) {
 	dc := api.NewDgraphClient(conn)
 	dg := dgo.NewDgraphClient(dc)
 
-	return dg, func() {
-		if err := conn.Close(); err != nil {
-			log.Printf("Error while closing connection:%v", err)
+	return &DgraphInstance{
+			Cln:  dg,
+			Conn: conn,
+		}, func() {
+			if err := conn.Close(); err != nil {
+				log.Printf("Error while closing connection:%v", err)
+			}
 		}
-	}
 }
