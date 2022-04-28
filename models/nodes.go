@@ -28,19 +28,19 @@ type Node struct {
 }
 
 type Inputs struct {
-	Connections []Connection2 `json:"connections"`
+	Connections []InputsConnection `json:"connections"`
 }
 
 type Outputs struct {
-	Connections []Connection1 `json:"connections"`
+	Connections []OutputsConnection `json:"connections"`
 }
 
-type Connection1 struct {
+type OutputsConnection struct {
 	Node   string `json:"node,omitempty"`
 	Output string `json:"output,omitempty"`
 }
 
-type Connection2 struct {
+type InputsConnection struct {
 	Order int    `json:"order"`
 	Node  string `json:"node,omitempty"`
 	Input string `json:"input,omitempty"`
@@ -73,7 +73,7 @@ func (i *Node) UnmarshalJSON(data []byte) error {
 			i.Name == "div" ||
 			i.Name == "print" {
 			tempOutputs1 := make(map[string]Outputs, 1)
-			tempOutputs1["output_1"] = Outputs{Connections: make([]Connection1, 0)}
+			tempOutputs1["output_1"] = Outputs{Connections: make([]OutputsConnection, 0)}
 			i.Outputs = tempOutputs1
 		} else {
 			temp := make(map[string]Outputs, 0)
@@ -83,16 +83,16 @@ func (i *Node) UnmarshalJSON(data []byte) error {
 
 	if i.Inputs == nil {
 		tempInputs1 := make(map[string]Inputs, 1)
-		tempInputs1["input_1"] = Inputs{Connections: make([]Connection2, 0)}
+		tempInputs1["input_1"] = Inputs{Connections: make([]InputsConnection, 0)}
 
 		tempInputs2 := make(map[string]Inputs, 3)
-		tempInputs2["input_1"] = Inputs{Connections: make([]Connection2, 0)}
-		tempInputs2["input_2"] = Inputs{Connections: make([]Connection2, 0)}
+		tempInputs2["input_1"] = Inputs{Connections: make([]InputsConnection, 0)}
+		tempInputs2["input_2"] = Inputs{Connections: make([]InputsConnection, 0)}
 
 		tempInputs3 := make(map[string]Inputs, 3)
-		tempInputs3["input_1"] = Inputs{Connections: make([]Connection2, 0)}
-		tempInputs3["input_2"] = Inputs{Connections: make([]Connection2, 0)}
-		tempInputs3["input_3"] = Inputs{Connections: make([]Connection2, 0)}
+		tempInputs3["input_1"] = Inputs{Connections: make([]InputsConnection, 0)}
+		tempInputs3["input_2"] = Inputs{Connections: make([]InputsConnection, 0)}
+		tempInputs3["input_3"] = Inputs{Connections: make([]InputsConnection, 0)}
 
 		if i.Name == "if-condition" ||
 			i.Name == "number" ||
@@ -126,15 +126,15 @@ func (i *Node) UnmarshalJSON(data []byte) error {
 
 		if i.Name == "if" {
 			if _, ok := i.Inputs["input_1"]; !ok {
-				i.Inputs["input_1"] = Inputs{Connections: make([]Connection2, 0)}
+				i.Inputs["input_1"] = Inputs{Connections: make([]InputsConnection, 0)}
 			}
 
 			if _, ok := i.Inputs["input_2"]; !ok {
-				i.Inputs["input_2"] = Inputs{Connections: make([]Connection2, 0)}
+				i.Inputs["input_2"] = Inputs{Connections: make([]InputsConnection, 0)}
 			}
 
 			if _, ok := i.Inputs["input_3"]; !ok {
-				i.Inputs["input_3"] = Inputs{Connections: make([]Connection2, 0)}
+				i.Inputs["input_3"] = Inputs{Connections: make([]InputsConnection, 0)}
 			}
 		}
 
@@ -145,11 +145,11 @@ func (i *Node) UnmarshalJSON(data []byte) error {
 			i.Name == "mul" ||
 			i.Name == "div" {
 			if _, ok := i.Inputs["input_1"]; !ok {
-				i.Inputs["input_1"] = Inputs{Connections: make([]Connection2, 0)}
+				i.Inputs["input_1"] = Inputs{Connections: make([]InputsConnection, 0)}
 			}
 
 			if _, ok := i.Inputs["input_2"]; !ok {
-				i.Inputs["input_2"] = Inputs{Connections: make([]Connection2, 0)}
+				i.Inputs["input_2"] = Inputs{Connections: make([]InputsConnection, 0)}
 			}
 		}
 

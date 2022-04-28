@@ -66,34 +66,52 @@ func GetProgramByUid(dg *db.DgraphInstance) http.HandlerFunc {
 		vars["$uid"] = uid
 
 		q := `query q($uid: string){
-				programs(func: uid($uid)) @recurse{
+				programs(func: uid($uid)){
 					programName
-					id
-					nid
-					name
-					data
-					nodes(orderasc: id)
-					class
-					typenode
-					html
-					inputs
-					node
-					input 
-					pos_x
-					pos_y
-					input_1  
-					input_2  
-					input_3  
-					connections(orderasc: order)
-					output
-					outputs 
-					output_1
-					output_2
-					output_3
-					con
-					num
-					msg
-					assign
+					nodes (orderasc: id){
+						id
+						name
+						data{
+							nid
+							con
+							num
+							msg
+							assign
+						}
+						class
+						html
+						typenode
+						inputs{
+							input_1{
+								connections(orderasc: order){
+									node
+									input
+								}
+							}  
+							input_2{
+								connections(orderasc: order){
+									node
+									input
+								}
+							}
+							input_3{
+								connections(orderasc: order){
+									node
+									input
+								}
+							}
+						}
+						outputs{
+							output_1{
+								connections{
+									node
+									output
+								}
+							}
+						}
+						pos_x
+						pos_y
+					}
 				}
 			}`
 
